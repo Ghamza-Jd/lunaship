@@ -1,0 +1,6 @@
+[workspace]
+resolver = "2"
+members = ["lunaship_cli", "lunaship_core"]
+
+[workspace.dependencies]
+lunaship_core = { path = "./lunaship_core" }
