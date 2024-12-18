@@ -16,6 +16,9 @@ fn main() -> Fallible<()> {
                 typ: typ.into(),
             })?;
         }
+        LunashipCommand::Add { alias, git } => {
+            lunaship_core::add::add_dependency(&alias, &git)?;
+        }
     }
     Ok(())
 }
