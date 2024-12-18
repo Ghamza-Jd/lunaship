@@ -24,6 +24,14 @@ pub enum LunashipCommand {
         #[arg(short, long, default_value = ".")]
         path: PathBuf,
     },
+    /// Adds a new dependency to the project
+    Add {
+        /// Alias of the dependency
+        alias: String,
+        /// Url to the git repository
+        #[arg(short, long)]
+        git: String,
+    },
 }
 
 #[derive(Debug, Clone, ValueEnum)]
