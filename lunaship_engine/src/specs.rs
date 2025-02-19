@@ -108,4 +108,27 @@ pub mod tests {
         let de_specs = toml::from_str(&de_specs).unwrap();
         assert_eq!(specs, de_specs);
     }
+
+    #[test]
+    fn specs_with_scripts() {
+        let toml_specs = toml::toml! {
+        [project]
+        name = "test-project"
+
+        [dependencies]
+
+        [scripts]
+        run = "love ."
+        };
+        let specs = Specs {
+            project: ProjectSpecs {
+                name: "test-project".to_string(),
+            },
+            dependencies: HashMap::new(),
+            scripts: HashMap::from([("run".to_string(), "love .".to_string())]),
+        };
+        let de_specs = toml::to_string(&toml_specs).unwrap();
+        let de_specs = toml::from_str(&de_specs).unwrap();
+        assert_eq!(specs, de_specs);
+    }
 }
