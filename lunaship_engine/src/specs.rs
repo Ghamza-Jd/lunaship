@@ -1,11 +1,20 @@
+use crate::error::LunashipError;
 use serde::Deserialize;
 use serde::Serialize;
 use std::collections::HashMap;
 
 #[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Specs {
-    project: ProjectSpecs,
-    dependencies: HashMap<String, DependencySpecs>,
+    pub project: ProjectSpecs,
+    pub dependencies: HashMap<String, DependencySpecs>,
+}
+
+impl Specs {
+    pub fn load() -> Result<Self, LunashipError> {
+        let specs = std::fs::read_to_string("lunaship.toml")?;
+        let specs: Specs = toml::from_str(&specs)?;
+        Ok(specs)
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
@@ -16,9 +25,8 @@ pub struct ProjectSpecs {
 #[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct DependencySpecs {
     #[serde(flatten)]
-    source: DependencySource,
-    #[serde(flatten)]
-    file_list: FilePicks,
+    pub source: DependencySource,
+    pub file: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
@@ -29,14 +37,6 @@ pub enum DependencySource {
         #[serde(flatten)]
         git_ref: GitRef,
     },
-}
-
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
-pub enum FilePicks {
-    #[serde(rename = "white_list")]
-    Whitelist(Vec<String>),
-    #[serde(rename = "black_list")]
-    Blacklist(Vec<String>),
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
@@ -53,7 +53,6 @@ pub enum GitRef {
 pub mod tests {
     use super::*;
     use std::collections::HashMap;
-    use std::vec;
 
     #[test]
     fn initial_specs() {
@@ -81,7 +80,7 @@ pub mod tests {
         name = "test-project"
 
         [dependencies]
-        json = { git = "https://github.com/rxi/json.lua", tag = "v0.1.2", white_list = ["json.lua"] }
+        json = { git = "https://github.com/rxi/json.lua", tag = "v0.1.2", file = "json.lua" }
         };
         let specs = Specs {
             project: ProjectSpecs {
@@ -94,7 +93,7 @@ pub mod tests {
                         git: "https://github.com/rxi/json.lua".to_string(),
                         git_ref: GitRef::Tag("v0.1.2".to_string()),
                     },
-                    file_list: FilePicks::Whitelist(vec!["json.lua".to_string()]),
+                    file: "json.lua".to_string(),
                 },
             )]),
         };
