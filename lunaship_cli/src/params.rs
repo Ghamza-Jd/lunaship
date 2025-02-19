@@ -3,7 +3,7 @@ use std::path::PathBuf;
 use clap::Parser;
 use clap::Subcommand;
 use clap::ValueEnum;
-use lunaship_core::init::LuaProjectType as CoreLuaProjectType;
+use lunaship_engine::init::LuaProjectType as CoreLuaProjectType;
 
 #[derive(Debug, Parser)]
 pub struct CliParams {
