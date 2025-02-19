@@ -51,7 +51,7 @@ fn init_love_files(project: &InitProject) -> Result<(), LunashipError> {
         project_name: project.name.clone(),
     }
     .render()?;
-    let lunaship_toml_content = templates::LunashipProject {
+    let lunaship_toml_content = templates::LunashipLoveProject {
         project_name: project.name.clone(),
     }
     .render()?;
