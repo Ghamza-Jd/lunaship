@@ -4,7 +4,6 @@ use crate::specs::DependencySource;
 use crate::specs::GitRef;
 use crate::specs::Specs;
 use std::process::Command;
-use std::time::Instant;
 
 pub fn install() -> Result<(), LunashipError> {
     let specs = Specs::load()?;
@@ -24,8 +23,8 @@ pub fn resolve_git_dependency(
     _git_ref: &GitRef,
     file: &str,
 ) -> Result<(), LunashipError> {
-    let now = Instant::now().elapsed().as_millis();
-    let temp_name = pathbuf![".", "lunaship_tmp", format!("{name}-{now}")];
+    let timestamp = chrono::Utc::now().timestamp();
+    let temp_name = pathbuf![".", "lunaship_tmp", format!("{name}-{timestamp}")];
     Command::new("git")
         .args(&["clone", git, &temp_name.to_string_lossy(), "--depth", "1"])
         .output()?;
