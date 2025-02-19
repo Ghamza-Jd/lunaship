@@ -19,3 +19,9 @@ pub struct LoveLuaRc;
 pub struct LoveMain {
     pub project_name: String,
 }
+
+#[derive(Template)]
+#[template(path = "love/lunaship_toml")]
+pub struct LunashipLoveProject {
+    pub project_name: String,
+}
