@@ -26,6 +26,11 @@ pub enum LunashipCommand {
     },
     /// Install the dependencies specified in lunaship.toml
     Install,
+    /// Run a script
+    Run {
+        /// Name of the script
+        script_name: String,
+    },
 }
 
 #[derive(Debug, Clone, ValueEnum)]

@@ -8,4 +8,6 @@ pub enum LunashipError {
     TomlSerializeError(#[from] toml::ser::Error),
     #[error("Template Render Error: {0}")]
     TemplateRenderError(#[from] askama::Error),
+    #[error("Script {0} not found")]
+    ScriptNotFound(String),
 }

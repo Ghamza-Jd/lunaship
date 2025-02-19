@@ -19,6 +19,9 @@ fn main() -> Fallible<()> {
         LunashipCommand::Install => {
             lunaship_engine::install::install()?;
         }
+        LunashipCommand::Run { script_name } => {
+            lunaship_engine::run::run(&script_name)?;
+        }
     }
     Ok(())
 }
