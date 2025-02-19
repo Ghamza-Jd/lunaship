@@ -7,6 +7,7 @@ use std::collections::HashMap;
 pub struct Specs {
     pub project: ProjectSpecs,
     pub dependencies: HashMap<String, DependencySpecs>,
+    pub scripts: HashMap<String, String>,
 }
 
 impl Specs {
@@ -61,12 +62,15 @@ pub mod tests {
         name = "test-project"
 
         [dependencies]
+
+        [scripts]
         };
         let specs = Specs {
             project: ProjectSpecs {
                 name: "test-project".to_string(),
             },
             dependencies: HashMap::new(),
+            scripts: HashMap::new(),
         };
         let de_specs = toml::to_string(&toml_specs).unwrap();
         let de_specs = toml::from_str(&de_specs).unwrap();
@@ -81,6 +85,8 @@ pub mod tests {
 
         [dependencies]
         json = { git = "https://github.com/rxi/json.lua", tag = "v0.1.2", file = "json.lua" }
+
+        [scripts]
         };
         let specs = Specs {
             project: ProjectSpecs {
@@ -96,6 +102,7 @@ pub mod tests {
                     file: "json.lua".to_string(),
                 },
             )]),
+            scripts: HashMap::new(),
         };
         let de_specs = toml::to_string(&toml_specs).unwrap();
         let de_specs = toml::from_str(&de_specs).unwrap();
