@@ -22,6 +22,9 @@ fn main() -> Fallible<()> {
         LunashipCommand::Run { script_name } => {
             lunaship_engine::run::run(&script_name)?;
         }
+        LunashipCommand::Start => {
+            lunaship_engine::run::run("start")?;
+        }
     }
     Ok(())
 }

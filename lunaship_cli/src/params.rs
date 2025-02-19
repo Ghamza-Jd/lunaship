@@ -31,6 +31,8 @@ pub enum LunashipCommand {
         /// Name of the script
         script_name: String,
     },
+    /// Runs the start script in lunaship.toml
+    Start,
 }
 
 #[derive(Debug, Clone, ValueEnum)]

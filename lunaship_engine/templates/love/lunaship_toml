@@ -1,0 +1,7 @@
+[project]
+name = "{{project_name}}"
+
+[dependencies]
+
+[scripts]
+start = "love ."
