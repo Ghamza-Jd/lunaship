@@ -1,3 +1,8 @@
+function love.load()
+    local font = love.graphics.newFont(24)
+    love.graphics.setFont(font)
+end
+
 function love.draw()
     love.graphics.print("{{project_name}}", 400, 300)
 end

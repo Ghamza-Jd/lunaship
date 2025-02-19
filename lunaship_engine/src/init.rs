@@ -44,10 +44,15 @@ fn init_love_files(project: &InitProject) -> Result<(), LunashipError> {
 
     let lua_rc_path = pathbuf![&dir_path, ".luarc.json"];
     let main_path = pathbuf![&dir_path, "main.lua"];
+    let conf_path = pathbuf![&dir_path, "conf.lua"];
     let lunaship_toml_path = pathbuf![&dir_path, "lunaship.toml"];
 
     let lua_rc_content = templates::LoveLuaRc.render()?;
     let main_content = templates::LoveMain {
+        project_name: project.name.clone(),
+    }
+    .render()?;
+    let conf_content = templates::LoveConf {
         project_name: project.name.clone(),
     }
     .render()?;
@@ -58,6 +63,7 @@ fn init_love_files(project: &InitProject) -> Result<(), LunashipError> {
 
     std::fs::write(lua_rc_path, lua_rc_content)?;
     std::fs::write(main_path, main_content)?;
+    std::fs::write(conf_path, conf_content)?;
     std::fs::write(lunaship_toml_path, lunaship_toml_content)?;
     Ok(())
 }
